@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="www.raghu.com.calllogemailer" >
+    package="www.MagnaticKush.com.Trace" >
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".CallLogMailer"
+            android:name="www.MagnaticKush.com.Trace.CallLogMailer"
             android:label="@string/title_activity_call_log_mailer" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
         </activity>
 
 
-        <receiver android:name=".IncomingCall">
+        <receiver android:name="www.MagnaticKush.com.Trace.IncomingCall">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>

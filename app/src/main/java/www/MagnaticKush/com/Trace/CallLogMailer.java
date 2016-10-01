@@ -1,4 +1,4 @@
-package www.raghu.com.calllogemailer;
+package www.MagnaticKush.com.Trace;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 

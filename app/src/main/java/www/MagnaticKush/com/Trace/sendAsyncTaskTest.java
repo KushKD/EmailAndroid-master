@@ -1,13 +1,11 @@
-package www.raghu.com.calllogemailer;
+package www.MagnaticKush.com.Trace;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * Created by Raghu on 28-03-2015.
  */
-public class EmailSenderAsyncTask extends AsyncTask<EmailSenderThread,Void,Void> {
-
+public class sendAsyncTaskTest extends AsyncTask<String,Void,Void>{
     /**
      * Override this method to perform a computation on a background thread. The
      * specified parameters are the parameters passed to {@link #execute}
@@ -23,12 +21,13 @@ public class EmailSenderAsyncTask extends AsyncTask<EmailSenderThread,Void,Void>
      * @see #publishProgress
      */
     @Override
-    protected Void doInBackground(EmailSenderThread... params) {
-        try {
-            params[0].run();
-        } catch (Exception e) {
-            Log.i("AsyncTask", e.getMessage(), e);
-        }
+    protected Void doInBackground(String... params) {
+        String subject = params[0];
+        String mail = params[1];
+        String senderEmail = params[2];
+        String receiverEmail = params[3];
+        GMailSender sender = new GMailSender("email", "password");
+        sender.sendMail(subject,mail,senderEmail,receiverEmail);
         return null;
     }
 }

@@ -1,10 +1,9 @@
-package www.raghu.com.calllogemailer;
+package www.MagnaticKush.com.Trace;
 
 /**
  * Created by Raghu on 27-03-2015.
  */
 import android.util.Log;
-import android.view.View;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;

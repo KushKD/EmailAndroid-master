@@ -1,10 +1,8 @@
-package www.raghu.com.calllogemailer;
+package www.MagnaticKush.com.Trace;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Handler;
-import android.provider.CallLog;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package www.raghu.com.calllogemailer;
+package www.MagnaticKush.com.Trace;
 
 import android.content.Context;
 import android.database.Cursor;
