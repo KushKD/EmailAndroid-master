@@ -1,52 +1,74 @@
 package www.MagnaticKush.com.Trace;
 
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 
-public class CallLogMailer extends ActionBarActivity {
+public class CallLogMailer extends AppCompatActivity {
 
     public final String LOG_TAG = "CallLogMailer";
     private PhoneCallListener phoneListener = null;
+    public static String id1 = "test_channel_01";
+    Button submitbutton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_log_mailer);
-
+        submitbutton = (Button) findViewById(R.id.submitbutton);
+        requestPermissions();
+        createchannel();
 
         SharedPreferences preferences = getSharedPreferences("LogMailer", Context.MODE_PRIVATE);
-        String recepientEmail = preferences.getString("rEmailId", "");
-        String senderEmail = preferences.getString("sEmailId", "");
-        String senderPassword = preferences.getString("sPassword", "");
-        Boolean enabled = preferences.getBoolean("lEnabled", false);
-        if (senderEmail.equals("") == false) {
+         preferences.getString("rEmailId", "");
+         preferences.getString("sEmailId", "");
+        preferences.getString("sPassword", "");
 
-            EditText senderEmailView = (EditText) findViewById(R.id.senderEmail);
-            senderEmailView.setText(senderEmail);
-        }
-        if (recepientEmail.equals("") == false) {
-            EditText recipientEmailView = (EditText) findViewById(R.id.email);
-            recipientEmailView.setText(recepientEmail);
-        }
-        if (senderPassword.equals("") == false) {
-            EditText password = (EditText) findViewById(R.id.senderPassword);
-            password.setText(senderPassword);
-        }
-            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxinstant);
-            checkBox.setChecked(enabled);
+        submitbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        enableListener(checkBox.isChecked());
+
+
+                Log.i(LOG_TAG, "button clicked");
+
+                SharedPreferences preferences = getSharedPreferences("LogMailer", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("rEmailId", "krishanjangir0003@gmail.com");
+                editor.putString("sEmailId", "krishanjangir0003@gmail.com");
+                editor.putString("sPassword", "hp13b0003");
+                editor.apply();
+                editor.commit();
+
+
+                Intent number5 = new Intent(getBaseContext(), PhoneService.class);
+                number5.putExtra("times", 5);
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    startForegroundService(number5);
+                } else {
+                    //lower then Oreo, just start the service.
+                    startService(number5);
+                }
+
+            }
+        });
+
 
     }
 
@@ -71,52 +93,46 @@ public class CallLogMailer extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public void onClick(View view) {
-        Log.i(LOG_TAG,"button clicked");
-        EditText emailIdView = (EditText) findViewById(R.id.email);
-        String emailId = emailIdView.getText().toString();
-        String sendingEmailId = ((EditText) findViewById(R.id.senderEmail)).getText().toString();
-        String sendingEmailIdPassword = ((EditText) findViewById(R.id.senderPassword)).getText().toString();
-        SharedPreferences preferences = getSharedPreferences("LogMailer", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("rEmailId", emailId);
-        editor.putString("sEmailId", sendingEmailId);
-        editor.putString("sPassword", sendingEmailIdPassword);
-        editor.putBoolean("lEnabled", ((CheckBox) findViewById(R.id.checkBoxinstant)).isChecked());
-        editor.apply();
-        editor.commit();
-        Toast tst = Toast.makeText(this,"settings saved", Toast.LENGTH_SHORT);
-        tst.show();
-
 
 
     }
 
-    public void listenStatus(View view) {
-        CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxinstant);
-         enableListener(checkBox.isChecked());
-    }
 
-    public void enableListener(Boolean status) {
+    private void createchannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (phoneListener == null) {
-            phoneListener = new PhoneCallListener(this);
-        }
-        if (status == true) {
-
-            TelephonyManager telephonyManager = (TelephonyManager) this
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-            telephonyManager.listen(phoneListener,
-                    PhoneStateListener.LISTEN_CALL_STATE);
-        } else {
-            TelephonyManager telephonyManager = (TelephonyManager) this
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-            telephonyManager.listen(phoneListener,
-                    PhoneStateListener.LISTEN_NONE);
+            NotificationChannel mChannel = new NotificationChannel(id1,
+                    getString(R.string.app_name),  //name of the channel
+                    NotificationManager.IMPORTANCE_LOW);   //importance level
+            //important level: default is is high on the phone.  high is urgent on the phone.  low is medium, so none is low?
+            // Configure the notification channel.
+            mChannel.setDescription(getString(R.string.my_string));
+            mChannel.enableLights(true);
+            // Sets the notification light color for notifications posted to this channel, if the device supports this feature.
+            mChannel.setShowBadge(true);
+            nm.createNotificationChannel(mChannel);
         }
     }
 
 
+    private void requestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                    Manifest.permission.READ_CALL_LOG)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG,
+                        Manifest.permission.WRITE_CALL_LOG,
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.CHANGE_NETWORK_STATE,
 
+
+                }, 0);
+            }
+        }
+
+
+    }
 }

@@ -53,23 +53,24 @@ public class GMailSender extends javax.mail.Authenticator {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        /*
-        *TSL authentication
-        * props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.debug", "true");*/
-        session = Session.getDefaultInstance(props, this);
+
+        //*TSL authentication
+//         props.put("mail.smtp.auth", "true");
+//        props.put("mail.smtp.starttls.enable", "true");
+//        props.put("mail.smtp.host", "smtp.gmail.com");
+//        props.put("mail.smtp.port", "587");
+//        props.put("mail.smtp.debug", "true");
+        session = Session.getDefaultInstance(props, new GMailAuthenticator(user, password));  //this
     }
 
-    protected PasswordAuthentication getPasswordAuthentication() {
-        return new PasswordAuthentication(user, password);
-    }
+//    protected PasswordAuthentication getPasswordAuthentication() {
+//        return new PasswordAuthentication(user, password);
+//    }
 
 
     public synchronized void sendMail(String subject, String body, String sender, String recipients) {
         try{
+            Log.e("Message",body);
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
             message.setSender(new InternetAddress(sender));

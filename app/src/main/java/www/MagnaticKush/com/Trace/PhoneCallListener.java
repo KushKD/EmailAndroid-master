@@ -37,12 +37,13 @@ public class PhoneCallListener extends PhoneStateListener {
         if (TelephonyManager.CALL_STATE_RINGING == state) {
             // phone ringing
             Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
-            isPhoneCalling = true;
+           isPhoneCalling = true;
         }
 
         if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
             // active
             Log.i(LOG_TAG, "OFFHOOK");
+            isPhoneCalling = true;
 
         }
 
@@ -65,10 +66,10 @@ public class PhoneCallListener extends PhoneStateListener {
                 final String senderEmail = preferences.getString("sEmailId", "");
                 final String senderPassword = preferences.getString("sPassword", "");
                 if (recepientEmail.equals("") || senderEmail.equals("") || senderPassword.equals("")) {
-                   Toast tst = Toast.makeText(context, "no values provided in settings", Toast.LENGTH_SHORT);
-                    tst.show();
+//                   Toast tst = Toast.makeText(context, "no values provided in settings", Toast.LENGTH_SHORT);
+//                    tst.show();
                 }else {
-                    Toast tst = Toast.makeText(context,"sending Email",Toast.LENGTH_SHORT);
+                    Toast tst = Toast.makeText(context,"sending Email to"+ senderEmail ,Toast.LENGTH_SHORT);
                     tst.show();
                     isPhoneCalling = false;
                     new Timer().schedule(new TimerTask() {

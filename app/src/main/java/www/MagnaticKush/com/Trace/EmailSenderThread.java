@@ -31,16 +31,20 @@ public class EmailSenderThread implements Runnable {
         String[] projection = new String[]{CallLog.Calls.NUMBER, android.provider.CallLog.Calls.CACHED_NAME, android.provider.CallLog.Calls.DATE, android.provider.CallLog.Calls.TYPE};
         Cursor cur = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, projection, null, null, CallLog.Calls.DATE +" desc");
         cur.moveToFirst();
+
+        Log.e("Column Names", cur.getColumnNames().toString());
         //String lastCallnumber = cur.getString();
         String lastCallnumber =    cur.getString(cur.getColumnIndex(android.provider.CallLog.Calls.NUMBER));
         String callName = cur.getString(cur.getColumnIndex(android.provider.CallLog.Calls.CACHED_NAME));
         String callDate = cur.getString(cur.getColumnIndex(android.provider.CallLog.Calls.DATE));
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
 
         try {
 
             date = dateFormat.parse(callDate);
+            Log.e("Call Date", callDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -62,7 +66,7 @@ public class EmailSenderThread implements Runnable {
 
         try {
             GMailSender sender = new GMailSender(senderMail , senderPassword);
-            sender.sendMail("You have received a call",
+            sender.sendMail(callName +" \t "+ lastCallnumber+ "\t" + callType,
                     message ,
                     senderMail,
                     recipientMail);

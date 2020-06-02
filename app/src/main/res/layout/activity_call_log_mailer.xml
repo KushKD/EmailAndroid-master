@@ -7,73 +7,18 @@
     android:layout_margin="5dp"
     tools:context="www.MagnaticKush.com.Trace.CallLogMailer"
     android:orientation = "vertical"
-    android:background="#FF545454">
+    android:gravity="center|center_horizontal|center_vertical"
+    android:background="#FFFFFF">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:id = "@+id/checkBoxinstant"
-        android:layout_height="wrap_content"
-        android:text = "Listen Status"
-        android:textColor="#FFFFFF"
-        android:background = "#FF545454"
-        android:onClick = "listenStatus"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:editable="true"
-        android:id = "@+id/email"
-        android:selectAllOnFocus ="true"
-        android:layout_above="@+id/checkBoxinstant"
-        android:contentDescription="receiver email"
-        android:inputType="textEmailAddress|textNoSuggestions"
-        android:autoText="false"
-        android:textColor="#FFFFFF"
-        android:background = "#FF545454"
-        android:textColorHint="#ffffff"
-        android:hint="receiver email" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:editable="true"
-        android:id = "@+id/senderEmail"
-        android:layout_above = "@id/email"
-        android:contentDescription="sender email"
-        android:inputType="textEmailAddress|textNoSuggestions"
-        android:selectAllOnFocus="true"
-        android:textColor="#FFFFFF"
-        android:background = "#FF545454"
-        android:textColorHint="#ffffff"
 
-        android:hint = "sender email"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:editable="true"
-        android:password="true"
-        android:id = "@+id/senderPassword"
-        android:layout_above = "@id/senderEmail"
-        android:clickable="false"
-        android:contentDescription="sender password"
-        android:selectAllOnFocus="true"
-        android:hint = "sender password"
-        android:inputType="textNoSuggestions"
-        android:textColor="#FFFFFF"
-        android:background = "#FF545454"
-        android:textColorHint="#ffffff"/>
+
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id = "@+id/submitbutton"
-        android:layout_above="@id/senderPassword"
-        android:onClick="onClick"
-        android:text = "Save"/>
-    <!--<Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id = "@+id/testEmailSend"
-        android:layout_above="@id/senderPassword"
-        android:onClick="onTest"
-        android:text = "Test Email"/>-->
+        android:text = "Click here to recharge"/>
+
 
 </LinearLayout>

@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "www.raghu.com.calllogemailer"
-        minSdkVersion 14
-        targetSdkVersion 21
+        minSdkVersion 22
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -20,9 +19,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile files('libs/additionnal.jar')
-    compile files('libs/activation.jar')
-    compile files('libs/mail.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/activation.jar')
+    implementation files('libs/mail.jar')
 }
